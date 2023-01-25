@@ -15,7 +15,6 @@ DoPlayerMovement::
 	ld [wCurInput], a
 
 ; Standing downhill instead moves down.
-
 	ld hl, wBikeFlags
 	bit BIKEFLAGS_DOWNHILL_F, [hl]
 	ret z
@@ -274,9 +273,9 @@ DoPlayerMovement::
 	call CheckIceTile
 	jr nc, .ice
 
-; Add simple run
-	call .RunCheck
-	jr z, .fast
+  call .CheckBHeldDown
+  jr z, .shouldberunning
+  jr .shouldbewalking
 
 ; Downhill riding is slower when not moving down.
 	call .BikeCheck
@@ -294,6 +293,16 @@ DoPlayerMovement::
 	call .DoStep
 	scf
 	ret
+
+.shouldberunning
+  call .IsRunning
+  call nz, .StartRunning
+  jr .fast
+
+.shouldbewalking
+  call .IsWalking
+  call nz, .StartWalking
+  jr .walk
 
 .fast
 	ld a, STEP_BIKE
@@ -736,11 +745,23 @@ ENDM
 	cp PLAYER_SKATE
 	ret
 
+.IsWalking:
+  ld a, [wPlayerState]
+  cp PLAYER_NORMAL
+  ret
+
+.IsRunning:
+  ld a, [wPlayerState]
+  cp PLAYER_RUN
+  ret
+
+.IsStanding:
+	ld a, [wWalkingDirection]
+	cp STANDING
+  ret
+
 ; When B is held down
-.RunCheck:
-	ld a, [wPlayerState]
-	cp PLAYER_NORMAL
-	ret nz
+.CheckBHeldDown:
 	ldh a, [hJoypadDown]
 	and B_BUTTON
 	cp B_BUTTON
@@ -796,6 +817,22 @@ ENDM
 	call UpdatePlayerSprite ; UpdateSprites
 	pop bc
 	ret
+
+.StartRunning:
+	push bc
+  ld a, PLAYER_RUN
+  ld [wPlayerState], a
+  call UpdatePlayerSprite
+  pop bc
+  ret
+
+.StartWalking:
+	push bc
+  ld a, PLAYER_NORMAL
+  ld [wPlayerState], a
+  call UpdatePlayerSprite
+  pop bc
+  ret
 
 CheckStandingOnIce::
 	ld a, [wPlayerTurningDirection]
