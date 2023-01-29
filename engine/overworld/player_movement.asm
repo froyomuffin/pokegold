@@ -273,9 +273,8 @@ DoPlayerMovement::
 	call CheckIceTile
 	jr nc, .ice
 
-  call .CheckBHeldDown
-  jr z, .shouldberunning
-  jr .shouldbewalking
+  call .BikeCheck
+  jr nz, .HandleWalkAndRun
 
 ; Downhill riding is slower when not moving down.
 	call .BikeCheck
@@ -294,23 +293,20 @@ DoPlayerMovement::
 	scf
 	ret
 
-MACRO IsWalking
-  ld a, [wPlayerState]
-  cp PLAYER_NORMAL
-ENDM
-
-MACRO IsRunning
-  ld a, [wPlayerState]
-  cp PLAYER_RUN
-ENDM
+.HandleWalkAndRun
+  call .CheckBHeldDown
+  jr z, .shouldberunning
+  jr .shouldbewalking
 
 .shouldberunning
-  IsRunning
+  ld a, [wPlayerState]
+  cp PLAYER_RUN
   call nz, .StartRunning
   jr .fast
 
 .shouldbewalking
-  IsWalking
+  ld a, [wPlayerState]
+  cp PLAYER_NORMAL
   call nz, .StartWalking
   jr .walk
 
