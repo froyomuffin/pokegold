@@ -294,13 +294,23 @@ DoPlayerMovement::
 	scf
 	ret
 
+MACRO IsWalking
+  ld a, [wPlayerState]
+  cp PLAYER_NORMAL
+ENDM
+
+MACRO IsRunning
+  ld a, [wPlayerState]
+  cp PLAYER_RUN
+ENDM
+
 .shouldberunning
-  call .IsRunning
+  IsRunning
   call nz, .StartRunning
   jr .fast
 
 .shouldbewalking
-  call .IsWalking
+  IsWalking
   call nz, .StartWalking
   jr .walk
 
@@ -744,21 +754,6 @@ ENDM
 	ret z
 	cp PLAYER_SKATE
 	ret
-
-.IsWalking:
-  ld a, [wPlayerState]
-  cp PLAYER_NORMAL
-  ret
-
-.IsRunning:
-  ld a, [wPlayerState]
-  cp PLAYER_RUN
-  ret
-
-.IsStanding:
-	ld a, [wWalkingDirection]
-	cp STANDING
-  ret
 
 ; When B is held down
 .CheckBHeldDown:
