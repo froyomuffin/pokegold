@@ -226,31 +226,13 @@ SavingDontTurnOffThePower:
 	ldh [hJoypadPressed], a
 	ldh [hJoypadSum], a
 	ldh [hJoypadDown], a
-	; Save the text speed setting to the stack
-	ld a, [wOptions]
-	push af
-	; Set the text speed to fasty
-	ld a, TEXT_DELAY_FAST
-	ld [wOptions], a
 	; SAVING... DON'T TURN OFF THE POWER.
 	ld hl, SavingDontTurnOffThePowerText
 	call PrintText
-	; Restore the text speed setting
-	pop af
-	ld [wOptions], a
 	call _SaveGameData
-	; copy the original text speed setting to the stack
-	ld a, [wOptions]
-	push af
-	; set text speed to fast
-	ld a, TEXT_DELAY_FAST
-	ld [wOptions], a
 	; <PLAYER> saved the game!
 	ld hl, SavedTheGameText
 	call PrintText
-	; restore the original text speed setting
-	pop af
-	ld [wOptions], a
 	ld de, SFX_SAVE
 	call WaitPlaySFX
 	call WaitSFX
