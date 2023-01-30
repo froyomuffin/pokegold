@@ -171,22 +171,17 @@ AskOverwriteSaveFile:
 	and a
 	jr z, .erase
 	call CompareLoadedAndSavedPlayerID
-	jr z, .yoursavefile
+	jr nz, .notyoursavefile
+  ret
+
+.notyoursavefile
 	ld hl, AnotherSaveFileText
 	call SaveTheGame_yesorno
 	jr nz, .refused
 	jr .erase
 
-.yoursavefile
-	ld hl, AlreadyASaveFileText
-	call SaveTheGame_yesorno
-	jr nz, .refused
-	jr .ok
-
 .erase
 	call ErasePreviousSave
-
-.ok
 	and a
 	ret
 
@@ -234,8 +229,8 @@ SavingDontTurnOffThePower:
 	; Save the text speed setting to the stack
 	ld a, [wOptions]
 	push af
-	; Set the text speed to medium
-	ld a, TEXT_DELAY_MED
+	; Set the text speed to fasty
+	ld a, TEXT_DELAY_FAST
 	ld [wOptions], a
 	; SAVING... DON'T TURN OFF THE POWER.
 	ld hl, SavingDontTurnOffThePowerText
@@ -1060,10 +1055,6 @@ SavingDontTurnOffThePowerText:
 
 SavedTheGameText:
 	text_far _SavedTheGameText
-	text_end
-
-AlreadyASaveFileText:
-	text_far _AlreadyASaveFileText
 	text_end
 
 AnotherSaveFileText:
