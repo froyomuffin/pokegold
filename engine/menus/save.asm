@@ -238,18 +238,12 @@ SavingDontTurnOffThePower:
 	; Restore the text speed setting
 	pop af
 	ld [wOptions], a
-	; Wait for 16 frames
-	ld c, 16
-	call DelayFrames
 	call _SaveGameData
-	; wait 32 frames
-	ld c, 32
-	call DelayFrames
 	; copy the original text speed setting to the stack
 	ld a, [wOptions]
 	push af
-	; set text speed to medium
-	ld a, TEXT_DELAY_MED
+	; set text speed to fast
+	ld a, TEXT_DELAY_FAST
 	ld [wOptions], a
 	; <PLAYER> saved the game!
 	ld hl, SavedTheGameText
@@ -260,9 +254,6 @@ SavingDontTurnOffThePower:
 	ld de, SFX_SAVE
 	call WaitPlaySFX
 	call WaitSFX
-	; wait 30 frames
-	ld c, 30
-	call DelayFrames
 	ret
 
 _SaveGameData:
