@@ -64,7 +64,7 @@
 	const SPRITE_SCIENTIST ; 3c
 	const SPRITE_KIMONO_GIRL ; 3d
 	const SPRITE_SAGE ; 3e
-	const SPRITE_CHRIS_RUN ; 3f
+	const SPRITE_UNUSED_GUY ; 3f
 	const SPRITE_GENTLEMAN ; 40
 	const SPRITE_BLACK_BELT ; 41
 	const SPRITE_RECEPTIONIST ; 42
@@ -97,6 +97,7 @@
 	const SPRITE_FRUIT_TREE ; 5d
 	const SPRITE_GOLD_TROPHY ; 5e
 	const SPRITE_SILVER_TROPHY ; 5f
+	const SPRITE_CHRIS_RUN ; 60
 DEF NUM_OVERWORLD_SPRITES EQU const_value - 1
 
 ; SpriteMons indexes (see data/sprites/sprite_mons.asm)

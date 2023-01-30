@@ -45,7 +45,6 @@ BeautySpriteGFX::              INCBIN "gfx/sprites/beauty.2bpp"
 SuperNerdSpriteGFX::           INCBIN "gfx/sprites/super_nerd.2bpp"
 RockerSpriteGFX::              INCBIN "gfx/sprites/rocker.2bpp"
 
-
 SECTION "Sprites 2", ROMX
 
 PokefanMSpriteGFX::            INCBIN "gfx/sprites/pokefan_m.2bpp"
@@ -66,7 +65,7 @@ FishingGuruSpriteGFX::         INCBIN "gfx/sprites/fishing_guru.2bpp"
 ScientistSpriteGFX::           INCBIN "gfx/sprites/scientist.2bpp"
 KimonoGirlSpriteGFX::          INCBIN "gfx/sprites/kimono_girl.2bpp"
 SageSpriteGFX::                INCBIN "gfx/sprites/sage.2bpp"
-ChrisRunSpriteGFX::            INCBIN "gfx/sprites/chris_run.2bpp"
+UnusedGuySpriteGFX::           INCBIN "gfx/sprites/unused_guy.2bpp"
 GentlemanSpriteGFX::           INCBIN "gfx/sprites/gentleman.2bpp"
 BlackBeltSpriteGFX::           INCBIN "gfx/sprites/black_belt.2bpp"
 ReceptionistSpriteGFX::        INCBIN "gfx/sprites/receptionist.2bpp"
@@ -99,3 +98,4 @@ FamicomSpriteGFX::             INCBIN "gfx/sprites/famicom.2bpp"
 FruitTreeSpriteGFX::           INCBIN "gfx/sprites/fruit_tree.2bpp"
 GoldTrophySpriteGFX::          INCBIN "gfx/sprites/gold_trophy.2bpp"
 SilverTrophySpriteGFX::        INCBIN "gfx/sprites/silver_trophy.2bpp"
+ChrisRunSpriteGFX::            INCBIN "gfx/sprites/chris_run.2bpp"
