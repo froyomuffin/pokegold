@@ -294,17 +294,19 @@ DoPlayerMovement::
 	ret
 
 .HandleWalkAndRun
+  call .CheckStandingStill
+  jr z, .shouldbewalk
   call .CheckBHeldDown
-  jr z, .shouldberunning
-  jr .shouldbewalking
+  jr z, .shouldbefast
+  jr .shouldbewalk
 
-.shouldberunning
+.shouldbefast
   ld a, [wPlayerState]
   cp PLAYER_RUN
   call nz, .StartRunning
   jr .fast
 
-.shouldbewalking
+.shouldbewalk
   ld a, [wPlayerState]
   cp PLAYER_NORMAL
   call nz, .StartWalking
@@ -751,7 +753,11 @@ ENDM
 	cp PLAYER_SKATE
 	ret
 
-; When B is held down
+.CheckStandingStill
+	ld a, [wWalkingDirection]
+	cp STANDING
+  ret
+
 .CheckBHeldDown:
 	ldh a, [hJoypadDown]
 	and B_BUTTON
